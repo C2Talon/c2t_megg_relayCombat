@@ -12,6 +12,10 @@ buffer c2t_megg_relayCombat(buffer page) {
 	string replace,append;
 	matcher mMonsterId = create_matcher("<!--\\sMONSTERID:\\s(\\d+)\\s-->",page);
 	matcher mReplace = create_matcher("(<td id='fmsg' valign=center>.*?<span[^>]+>.*?</span>)",page);
+	record something {
+		string color;
+		string text;
+	} status;
 
 	if (!mMonsterId.find() || !mReplace.find())
 		return page;
@@ -20,13 +24,15 @@ buffer c2t_megg_relayCombat(buffer page) {
 	replace = mReplace.group(1);
 
 	if (c2t_megg_maxed() contains mon)
-		append = "<br /><font size=2 color=gray>Mimic DNA Bank status: max donated</font>";
+		status = new something("gray","max donated");
 	else if (mon == $monster[none])
-		append = "<br /><font size=2 color=red>Mimic DNA Bank status: unknown monster</font>";
+		status = new something("red","unknown monster");
 	else if (!mon.copyable)
-		append = "<br /><font size=2 color=gray>Mimic DNA Bank status: not eggable</font>";
+		status = new something("gray","not eggable");
 	else
-		append = "<br /><font size=2 color=blue>Mimic DNA Bank status: not max donated</font>";
+		status = new something("blue","not max donated");
+
+	append = `<br /><font size="2" color="{status.color}">Mimic DNA Bank status: {status.text}</font>`;
 
 	out.replace_string(replace,replace+append);
 
