@@ -21,6 +21,8 @@ buffer c2t_megg_relayCombat(buffer page) {
 
 	if (c2t_megg_maxed() contains mon)
 		append = "<br /><font size=2 color=gray>Mimic DNA Bank status: max donated</font>";
+	else if (mon == $monster[none])
+		append = "<br /><font size=2 color=red>Mimic DNA Bank status: unknown monster</font>";
 	else if (!mon.copyable)
 		append = "<br /><font size=2 color=gray>Mimic DNA Bank status: not eggable</font>";
 	else
