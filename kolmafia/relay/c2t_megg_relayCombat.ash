@@ -1,4 +1,4 @@
-//c2t megg relayFightPage
+//c2t megg relayCombat
 //c2t
 
 //adds a line of text to denote whether a monster in combat already has its mimic eggs maxed or not
