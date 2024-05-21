@@ -10,12 +10,16 @@ Kolmafia relay script written in ASH to add a line of text to denote whether a m
 
 ## Installation
 
+How to install depends on if `fight.ash` is modified by another script or not.
+
+### No other script modifies `fight.ash`
+
 If you do not have another script that modifies `fight.ash` in the `relay` folder, this can be installed via the KoLmafia CLI:
 * `git checkout https://github.com/C2Talon/c2t_megg_relayCombat.git master`
 
-### Installation when another script modifies `fight.ash`
+### Other scripts modify `fight.ash`
 
-Manual edits will be required if `fight.ash` is modified by another script. The `dep` branch can be used to install a version of this that does not have its own `fight.ash` file as follow:
+Manual edits will be required if `fight.ash` is modified by another script. The `dep` branch can be used to install a version of this that does not have its own `fight.ash` file as follows:
 * `git checkout https://github.com/C2Talon/c2t_megg_relayCombat.git dep`
 
 Then the `fight.ash` file will have to be edited to `import` the `c2t_megg_relayCombat.ash` file, and also called to modify the output text before the `write()`, which might look something like the following:
