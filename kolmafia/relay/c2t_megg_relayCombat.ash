@@ -19,9 +19,12 @@ buffer c2t_megg_relayCombat(buffer page) {
 	mon = mMonsterId.group(1).to_monster();
 	replace = mReplace.group(1);
 
-	append = c2t_megg_maxed() contains mon
-		? "<br /><font size=2 color=gray>Mimic egg status: maxed</font>"
-		: "<br /><font size=2 color=blue>Mimic egg status: not maxed</font>";
+	if (c2t_megg_maxed() contains mon)
+		append = "<br /><font size=2 color=gray>Mimic DNA Bank status: max donated</font>";
+	else if (!mon.copyable)
+		append = "<br /><font size=2 color=gray>Mimic DNA Bank status: not eggable</font>";
+	else
+		append = "<br /><font size=2 color=blue>Mimic DNA Bank status: not max donated</font>";
 
 	out.replace_string(replace,replace+append);
 
