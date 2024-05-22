@@ -10,6 +10,7 @@ buffer c2t_megg_relayCombat(buffer page) {
 	buffer out = page;
 	monster mon;
 	string replace,append;
+	boolean[monster] maxlist;
 	matcher mMonsterId = create_matcher("<!--\\sMONSTERID:\\s(\\d+)\\s-->",page);
 	matcher mReplace = create_matcher("(<td id='fmsg' valign=center>.*?<span[^>]+>.*?</span>)",page);
 	record something {
@@ -22,8 +23,11 @@ buffer c2t_megg_relayCombat(buffer page) {
 
 	mon = mMonsterId.group(1).to_monster();
 	replace = mReplace.group(1);
+	maxlist = c2t_megg_maxed();
 
-	if (c2t_megg_maxed() contains mon)
+	if (maxlist.count() == 0)
+		status = new something("red","list not found");
+	else if (maxlist contains mon)
 		status = new something("gray","max donated");
 	else if (mon == $monster[none])
 		status = new something("red","unknown monster");
