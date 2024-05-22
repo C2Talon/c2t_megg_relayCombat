@@ -1,6 +1,6 @@
 # c2t_megg_relayCombat
 
-Kolmafia relay script written in ASH to add a line of text to denote whether a monster in combat already has its mimic eggs maxed or not, as can be seen here:
+Kolmafia relay override script written in ASH to add a line of text to denote whether a monster in combat already has its mimic eggs maxed or not, as can be seen here:
 
 ![mimic_egg_status_in_combat.png](https://github.com/C2Talon/c2t_megg_relayCombat/blob/master/mimic_egg_status_in_combat.png "mimic egg status in combat example")
 
@@ -10,14 +10,14 @@ Kolmafia relay script written in ASH to add a line of text to denote whether a m
 
 ## Installation
 
-How to install depends on if `fight.ash` is modified by another script or not.
+How to install depends on if `fight.ash` in the `relay` folder is modified by another script or not.
 
-### No other script modifies `fight.ash`
+### If no other script modifies `fight.ash`:
 
-If you do not have another script that modifies `fight.ash` in the `relay` folder, this can be installed via the KoLmafia CLI:
+The only thing that need to be done is install it from the KoLmafia CLI if no other script modifies `fight.ash`:
 * `git checkout https://github.com/C2Talon/c2t_megg_relayCombat.git master`
 
-### Other scripts modify `fight.ash`
+### If other scripts modify `fight.ash`:
 
 Manual edits will be required if `fight.ash` is modified by another script. The `dep` branch can be used to install a version of this that does not have its own `fight.ash` file as follows:
 * `git checkout https://github.com/C2Talon/c2t_megg_relayCombat.git dep`
