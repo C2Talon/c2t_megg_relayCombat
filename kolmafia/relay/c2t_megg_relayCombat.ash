@@ -11,18 +11,16 @@ buffer c2t_megg_relayCombat(buffer page) {
 	monster mon;
 	string replace,append;
 	boolean[monster] maxlist;
-	matcher mMonsterId = create_matcher("<!--\\sMONSTERID:\\s(\\d+)\\s-->",page);
-	matcher mReplace = create_matcher("(<td id='fmsg' valign=center>.*?<span[^>]+>.*?</span>)",page);
+	matcher m = create_matcher("<!--\\sMONSTERID:\\s(\\d+)\\s-->",page);
 	record something {
 		string color;
 		string text;
 	} status;
 
-	if (!mMonsterId.find() || !mReplace.find())
+	if (!m.find())
 		return page;
 
-	mon = mMonsterId.group(1).to_monster();
-	replace = mReplace.group(1);
+	mon = m.group(1).to_monster();
 	maxlist = c2t_megg_maxed();
 
 	if (maxlist.count() == 0)
@@ -38,7 +36,21 @@ buffer c2t_megg_relayCombat(buffer page) {
 
 	append = `<br /><font size="2" color="{status.color}">Mimic DNA Bank status: {status.text}</font>`;
 
-	out.replace_string(replace,replace+append);
+	//find what to replace
+
+	//basic
+	m = create_matcher("<td id='fmsg' valign=center>.*?<span[^>]+id='monname'>.*?</span>",page);
+	if (m.find())
+		replace = m.group(0);
+
+	//haiku dungeon
+	m = create_matcher("(<td id='fmsg' valign=center><[Tt]able>.*?)</td></tr></table></td><!--\\sMONSTERID",page);
+	if (m.find())
+		replace = m.group(1);
+
+	//replace it
+	if (replace != "")
+		out.replace_string(replace,replace+append);
 
 	return out;
 }
